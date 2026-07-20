@@ -28,12 +28,7 @@ jobs:
       - name: Prepare Deployment Directory
         run: |
           mkdir -p ./deploy
-          if [ -f "./target/wasm32-unknown-unknown/release/Downbeat.wasm" ]; then
-              echo "exists=true" >> $GITHUB_OUTPUT
-            else
-              echo "exists=false" >> $GITHUB_OUTPUT
-            fi
-          cp ./target/wasm32-unknown-unknown/release/Downbeat.wasm ./deploy/
+          cp target/wasm32-unknown-unknown/release/Downbeat.wasm ./deploy/
           cp index.html ./deploy/
           cp mq_js_bundle.js ./deploy/
 
