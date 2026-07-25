@@ -328,8 +328,7 @@ async fn main() {
                 );
             }
         }
-
-
+        
         draw_fps();
 
         next_frame().await
