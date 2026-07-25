@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
@@ -35,16 +35,12 @@ jobs:
       - name: Install wasm-bindgen CLI
         run: cargo install -f wasm-bindgen-cli
 
-      - name: Run wasm-bindgen (produce web artifacts)
+      - name: Prepare Deployment Directory
         run: |
-          wasm=$(ls target/wasm32-unknown-unknown/release/*.wasm 2>/dev/null | head -n1 || true)
-          if [ -z "$wasm" ]; then
-            echo "ERROR: no wasm file found in target/wasm32-unknown-unknown/release"
-            exit 1
-          fi
-          echo "Using wasm: $wasm"
           mkdir -p ./deploy
-          wasm-bindgen "$wasm" --out-dir ./deploy --target web
+          cp ./target/wasm32-unknown-unknown/release/Downbeat.wasm ./deploy/
+          cp index.html ./deploy/
+          cp mq_js_bundle.js ./deploy/
 
       - name: Copy site assets
         run: |
