@@ -1,7 +1,7 @@
 use std::default::Default;
 use macroquad::prelude::*;
 use std::fs;
-use macroquad_particles::{self as particles, ColorCurve, Emitter, EmitterConfig};
+// use macroquad_particles::{self as particles, ColorCurve, Emitter, EmitterConfig};
 
 const FRAGMENT_SHADER: &str = include_str!("starfield-shader.glsl");
 
@@ -60,27 +60,27 @@ enum GameState {
     GameOver,
 }
 
-fn particle_explosion() -> particles::EmitterConfig {
-    particles::EmitterConfig {
-        local_coords: false,
-        one_shot: true,
-        emitting: true,
-        lifetime: 0.6,
-        lifetime_randomness: 0.3,
-        explosiveness: 0.65,
-        initial_direction_spread: 2.0 * std::f32::consts::PI,
-        initial_velocity: 300.0,
-        initial_velocity_randomness: 0.8,
-        size: 3.0,
-        size_randomness: 0.3,
-        colors_curve: ColorCurve {
-            start: GREEN,
-            mid: ORANGE,
-            end: RED,
-        },
-        ..Default::default()
-    }
-}
+// fn particle_explosion() -> particles::EmitterConfig {
+//     particles::EmitterConfig {
+//         local_coords: false,
+//         one_shot: true,
+//         emitting: true,
+//         lifetime: 0.6,
+//         lifetime_randomness: 0.3,
+//         explosiveness: 0.65,
+//         initial_direction_spread: 2.0 * std::f32::consts::PI,
+//         initial_velocity: 300.0,
+//         initial_velocity_randomness: 0.8,
+//         size: 3.0,
+//         size_randomness: 0.3,
+//         colors_curve: ColorCurve {
+//             start: GREEN,
+//             mid: ORANGE,
+//             end: RED,
+//         },
+//         ..Default::default()
+//     }
+// }
 
 #[macroquad::main("Downbeat")]
 async fn main() {
@@ -122,7 +122,7 @@ async fn main() {
         }
     ).unwrap();
 
-    let mut explosions: Vec<(Emitter, Vec2)> = vec![];
+    // let mut explosions: Vec<(Emitter, Vec2)> = vec![];
 
     loop {
         clear_background(BLACK);
@@ -153,7 +153,7 @@ async fn main() {
                 if is_key_pressed(KeyCode::Space) {
                     squares.clear();
                     bullets.clear();
-                    explosions.clear();
+                    // explosions.clear();
                     circle.x = screen_width() * 0.5;
                     circle.y = screen_height() * 0.5;
                     score = 10;
@@ -231,7 +231,7 @@ async fn main() {
                 squares.retain(|square| !square.collided);
                 bullets.retain(|bullet| !bullet.collided);
 
-                explosions.retain(|(explosion, _)| explosion.config.emitting);
+                // explosions.retain(|(explosion, _)| explosion.config.emitting);
 
                 // Check for collisions
                 if squares.iter().any(|square| circle.collides_with(square)) {
@@ -248,13 +248,13 @@ async fn main() {
                             score += (square.size.round() as i32) / 5;
                             high_score = high_score.max(score);
 
-                            explosions.push((
-                                Emitter::new(EmitterConfig {
-                                    amount:square.size.round() as u32 * 2,
-                                    ..particle_explosion()
-                                }),
-                                vec2(square.x, square.y),
-                            ));
+                            // explosions.push((
+                            //     Emitter::new(EmitterConfig {
+                            //         amount:square.size.round() as u32 * 2,
+                            //         ..particle_explosion()
+                            //     }),
+                            //     vec2(square.x, square.y),
+                            // ));
                         }
                     }
                 }
@@ -266,9 +266,9 @@ async fn main() {
 
                 draw_circle(circle.x, circle.y, circle.size / 2.0, YELLOW);
 
-                for (explosion, coords) in explosions.iter_mut() {
-                    explosion.draw(*coords);
-                }
+                // for (explosion, coords) in explosions.iter_mut() {
+                //     explosion.draw(*coords);
+                // }
 
                 for square in &squares {
                     draw_rectangle(
