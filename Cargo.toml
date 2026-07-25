@@ -6,3 +6,6 @@ edition = "2024"
 [dependencies]
 macroquad = "0.4.15"
 macroquad-particles = "0.2.2"
+
+[patch.crates-io]
+miniquad = "=0.4.11"
